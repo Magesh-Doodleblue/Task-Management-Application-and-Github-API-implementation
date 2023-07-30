@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
       // You can add additional routes here if needed
       routes: {
         '/dashboard': (_) => const Dashboard(),
-        '/project': (_) => const ProjectsScreen(),
+        '/project': (_) => const ProjectScreen(),
         '/dashboarddesign': (_) => const DashboardDesignScreen(),
         '/settings': (_) => const SettingsScreen(),
       },

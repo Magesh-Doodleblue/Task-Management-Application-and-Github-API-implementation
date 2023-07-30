@@ -21,8 +21,8 @@ class _BottomNavigationState extends State<BottomNavigation> {
 
   final List<Widget> _screens = [
     const Dashboard(),
-    const ProjectsScreen(),
     const DashboardDesignScreen(),
+    const ProjectScreen(),
     const SettingsScreen(),
     const GitHubRepositoryListScreen(), // Add GitHub screen as the last item
   ];
