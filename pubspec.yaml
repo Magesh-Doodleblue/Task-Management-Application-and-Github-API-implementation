@@ -45,6 +45,7 @@ dependencies:
   fluttertoast: ^8.2.2
   custom_check_box: ^0.0.4
   lottie: ^2.5.0
+  image_picker: ^1.0.1
 
 dev_dependencies:
   flutter_test:

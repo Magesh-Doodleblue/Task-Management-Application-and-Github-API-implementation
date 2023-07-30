@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
+import '../../Controllers/database_helper.dart';
 import '../common/style.dart';
 import 'all_projects.dart';
 import 'completed_projects.dart';
@@ -17,10 +20,32 @@ class _ProjectScreenState extends State<ProjectScreen>
   final List<String> tabs = ['All', 'Ongoing', 'Completed'];
 
   late TabController tabController;
+  String profileName = '';
+  String? profilePicture;
+  bool isProfilePicture = false;
+
+  Future<void> _loadProfileData() async {
+    // Fetch profile data from the database
+    Map<String, dynamic> profileData = await DatabaseHelper().getProfile();
+
+    setState(() {
+      // Set the text controllers and _selectedImagePath with fetched data
+      profileName = profileData['name'] ?? '';
+      // phoneController.text = profileData['phone'] ?? '';
+      profilePicture = profileData['profileImage'];
+      if (profilePicture != null) {
+        isProfilePicture = true;
+      } else {
+        isProfilePicture = false;
+      }
+    });
+  }
 
   @override
   void initState() {
     super.initState();
+
+    _loadProfileData();
     tabController = TabController(length: tabs.length, vsync: this);
   }
 
@@ -30,11 +55,13 @@ class _ProjectScreenState extends State<ProjectScreen>
     super.dispose();
   }
 
-  Row customAppbar() {
-    return const Row(
+  Row customAppbar(String profilePicture, bool isProfilePicture) {
+    return Row(
       children: [
         CircleAvatar(
-          backgroundImage: AssetImage("assets/images/avatar.jpg"),
+          backgroundImage: isProfilePicture
+              ? FileImage(File(profilePicture))
+              : AssetImage('assets/images/avatar.jpg') as ImageProvider,
           radius: 30,
         ),
         Spacer(),
@@ -57,7 +84,7 @@ class _ProjectScreenState extends State<ProjectScreen>
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              customAppbar(),
+              customAppbar(profilePicture ?? '', isProfilePicture),
               const SizedBox(
                   height: 20), // Add spacing between the text and tab bar
               Text(

@@ -6,7 +6,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart' as path;
 import 'package:thiran_task/View/Dashboard%20Design/dashboard_design.dart';
 import 'package:thiran_task/View/Projects/projects.dart';
-import 'package:thiran_task/View/settings/settings.dart';
+import 'package:thiran_task/View/Profile/profile.dart';
 
 import 'View/Dashboard/dashboard.dart';
 import 'View/Github Home/github_home.dart';

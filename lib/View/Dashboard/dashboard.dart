@@ -1,8 +1,11 @@
 // ignore_for_file: must_be_immutable, unused_local_variable
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 
+import '../../Controllers/database_helper.dart';
 import '../../Model/data.dart';
 import '../Projects/widget/project_color.dart';
 import '../common/style.dart';
@@ -21,6 +24,33 @@ class _DashboardState extends State<Dashboard> {
   Data data = Data();
   GetColor getColor = GetColor();
   //
+  String profileName = '';
+  String? profilePicture;
+  bool isProfilePicture = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadProfileData();
+  }
+
+  Future<void> _loadProfileData() async {
+    // Fetch profile data from the database
+    Map<String, dynamic> profileData = await DatabaseHelper().getProfile();
+
+    setState(() {
+      // Set the text controllers and _selectedImagePath with fetched data
+      profileName = profileData['name'] ?? '';
+      // phoneController.text = profileData['phone'] ?? '';
+      profilePicture = profileData['profileImage'];
+      if (profilePicture != null) {
+        isProfilePicture = true;
+      } else {
+        isProfilePicture = false;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -32,7 +62,7 @@ class _DashboardState extends State<Dashboard> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               sizedBoxCustom(valueHeight: 10, valueWidth: 0),
-              customAppbar(),
+              customAppbar(profilePicture ?? '', isProfilePicture),
               sizedBoxCustom(valueHeight: 20, valueWidth: 0),
               greetingsToUser(),
               sizedBoxCustom(valueHeight: 10, valueWidth: 0),
@@ -186,11 +216,13 @@ class _DashboardState extends State<Dashboard> {
         width: valueWidth,
       );
 
-  Row customAppbar() {
-    return const Row(
+  Row customAppbar(String profilePicture, bool isProfilePicture) {
+    return Row(
       children: [
         CircleAvatar(
-          backgroundImage: AssetImage("assets/images/avatar.jpg"),
+          backgroundImage: isProfilePicture
+              ? FileImage(File(profilePicture))
+              : AssetImage('assets/images/avatar.jpg') as ImageProvider,
           radius: 30,
         ),
         Spacer(),
