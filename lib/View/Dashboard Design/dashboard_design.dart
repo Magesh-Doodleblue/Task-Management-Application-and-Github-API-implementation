@@ -2,7 +2,6 @@
 
 import 'dart:developer';
 
-import 'package:custom_check_box/custom_check_box.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
@@ -262,7 +261,6 @@ class _DashboardDesignScreenState extends State<DashboardDesignScreen> {
       ],
     );
   }
-
 
   Widget buildDropdownSelector() {
     return DropdownButton<String>(

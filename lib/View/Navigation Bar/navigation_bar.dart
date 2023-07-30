@@ -31,6 +31,8 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: const Color.fromARGB(255, 116, 143, 249),
         onPressed: () {
           log("message");
+          // Show a Snackbar with the message
+          showSnackBar(context);
         },
         child: Icon(Icons.add),
       ),
@@ -48,6 +50,15 @@ class _MyHomePageState extends State<MyHomePage> {
             buildNavItem(Icons.person_outline_rounded, 3),
           ],
         ),
+      ),
+    );
+  }
+
+  void showSnackBar(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text("This feature is on Development"),
+        duration: Duration(seconds: 2),
       ),
     );
   }

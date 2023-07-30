@@ -68,7 +68,7 @@ class _DashboardState extends State<Dashboard> {
               sizedBoxCustom(valueHeight: 20, valueWidth: 0),
               greetingsToUser(),
               sizedBoxCustom(valueHeight: 10, valueWidth: 0),
-              userName(),
+              userName(profileName),
               sizedBoxCustom(valueHeight: 25, valueWidth: 0),
               const SizedBox(height: 250, child: TaskStatusWidget()),
               //color color 4 boxes
@@ -224,9 +224,12 @@ class _DashboardState extends State<Dashboard> {
     );
   }
 
-  Text userName() {
+  Text userName(String profileName) {
+    if (profileName == "") {
+      profileName = "Alex Marconi";
+    }
     return Text(
-      "Alex Marconi",
+      profileName,
       style: AppStyle.customTextStyle(
         fontSize: 24,
         fontWeight: FontWeight.bold,
@@ -235,8 +238,9 @@ class _DashboardState extends State<Dashboard> {
   }
 
   Text greetingsToUser() {
+    String greeting = getGreeting();
     return Text(
-      "Hello",
+      "Hello, $greeting",
       style: AppStyle.customTextStyle(
           fontSize: 20, fontWeight: FontWeight.w500, color: Colors.black54),
     );
@@ -256,6 +260,11 @@ class _DashboardState extends State<Dashboard> {
   }
 
   Row customAppbar(String profilePicture, bool isProfilePicture) {
+    // Initialize a TextEditingController to control the text input.
+    TextEditingController _searchController = TextEditingController();
+
+    // A variable to track whether the search field should be shown or not.
+    bool showSearchField = false;
     return Row(
       children: [
         CircleAvatar(
@@ -265,12 +274,32 @@ class _DashboardState extends State<Dashboard> {
           radius: 30,
         ),
         Spacer(),
+
+        Visibility(
+          visible: showSearchField,
+          child: SizedBox(
+            width: 120,
+            child: TextField(
+              controller: _searchController,
+              decoration: InputDecoration(
+                hintText: 'Search...',
+                border: InputBorder.none,
+              ),
+            ),
+          ),
+        ),
         InkWell(
+          onTap: () {
+            // Toggle the visibility of the search field when the search icon is tapped.
+            setState(() {
+              showSearchField = !showSearchField;
+            });
+          },
           child: ImageIcon(
             AssetImage("assets/icons/search.png"),
             size: 24,
           ),
-        ),
+        ), // Wrap the TextField with Visibility widget to show/hide it.
       ],
     );
   }

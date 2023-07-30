@@ -56,15 +56,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Scaffold(
-        body: Padding(
-          padding: const EdgeInsets.all(18.0),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                customAppbar(),
-                profileBody(),
-              ],
+      child: GestureDetector(
+        onTap: () {
+          // Dismiss the keyboard and remove focus from the text field.
+          FocusScope.of(context).unfocus();
+        },
+        child: Scaffold(
+          body: Padding(
+            padding: const EdgeInsets.all(18.0),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  customAppbar(),
+                  profileBody(),
+                ],
+              ),
             ),
           ),
         ),
@@ -116,6 +122,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           height: 30,
         ),
         Container(
+          //username textfield
           height: 65,
           alignment: Alignment.center,
           decoration: BoxDecoration(
@@ -141,6 +148,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           height: 30,
         ),
         Container(
+          //Phone number textfield
           height: 65,
           alignment: Alignment.center,
           decoration: BoxDecoration(
