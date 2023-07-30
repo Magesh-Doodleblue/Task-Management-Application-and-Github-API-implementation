@@ -34,7 +34,7 @@ class _DashboardState extends State<Dashboard> {
     "Product Delivery",
   ];
 
-  List progressBarPercentage = [];
+  List progressBarPercentage = [60, 40, 50, 10, 90, 100];
 
   List progressBarActiveColors = [
     Colors.deepPurple,
@@ -69,74 +69,8 @@ class _DashboardState extends State<Dashboard> {
               const SizedBox(height: 250, child: TaskStatusWidget()),
               //color color 4 boxes
               dailyTaskRow(), //dropdown with daily task text
-              sizedBoxCustom(valueHeight: 10, valueWidth: 0),
-              Row(
-                children: [
-                  //hard coding listview item with children
-                  sizedBoxCustom(valueWidth: 10, valueHeight: 0),
-                  Container(
-                    decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(width: 0.7, color: Colors.black)),
-                    child: const CircleAvatar(
-                      radius: 12,
-                      backgroundColor: Colors.white,
-                      child: Icon(Icons.check, size: 8, color: Colors.black),
-                    ),
-                  ),
-                  sizedBoxCustom(valueWidth: 15, valueHeight: 0),
-                  const Column(
-                    children: [
-                      Text("Application",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 15)),
-                      SizedBox(height: 15),
-                      StepProgressIndicator(
-                        //progress indicator bar
-                        totalSteps: 100,
-                        currentStep: 62,
-                        size: 4,
-                        padding: 0,
-                        selectedColor: Colors.black,
-                        unselectedColor: Colors.transparent,
+              sizedBoxCustom(valueHeight: 15, valueWidth: 0),
 
-                        roundedEdges: Radius.circular(10),
-                      ),
-                    ],
-                  ),
-                  const Spacer(),
-                  const SizedBox(
-                    width: 80,
-                    child: Stack(
-                      children: [
-                        CircleAvatar(
-                          backgroundImage: AssetImage("assets/images/man.jpg"),
-                          radius: 16,
-                        ),
-                        Positioned(
-                          left: 20,
-                          child: CircleAvatar(
-                            backgroundImage:
-                                AssetImage("assets/images/woman.jpg"),
-                            radius: 16,
-                          ),
-                        ),
-                        Positioned(
-                          left: 40,
-                          child: CircleAvatar(
-                            backgroundImage:
-                                AssetImage("assets/images/woman3.jpg"),
-                            radius: 16,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Icon(Icons.arrow_forward_ios,
-                      size: 20, color: Colors.black.withOpacity(0.8)),
-                  sizedBoxCustom(valueWidth: 10, valueHeight: 0)
-                ],
-              ),
               Expanded(
                 child: GestureDetector(
                   onTap: () {
@@ -150,68 +84,94 @@ class _DashboardState extends State<Dashboard> {
                             child:
                                 CircularProgressIndicator(color: Colors.black));
                       }
-
-                      return Padding(
-                        padding: const EdgeInsets.only(bottom: 8, top: 8),
-                        child: ListTile(
-                          leading: const CircleAvatar(
-                            radius: 20,
-                            child: Icon(Icons.abc),
-                          ),
-                          title: Text(itemList[index],
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 18)),
-                          subtitle: Row(
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const SizedBox(height: 5),
-                                  sizedBoxCustom(valueWidth: 0, valueHeight: 5),
-                                  StepProgressIndicator(
-                                    //progress indicator bar
-                                    totalSteps: 100,
-                                    currentStep: 32,
-                                    size: 5,
-                                    padding: 0,
-                                    selectedColor:
-                                        progressBarActiveColors[index],
-                                    unselectedColor: Colors.transparent,
-                                    roundedEdges: const Radius.circular(10),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(width: 30),
-                              const Row(
-                                children: [
-                                  CircleAvatar(
-                                    radius: 18,
-                                    backgroundColor: Colors.blue,
-                                  ),
-                                  SizedBox(width: 5),
-                                  CircleAvatar(
-                                    radius: 18,
-                                    backgroundColor: Colors.green,
-                                  ),
-                                  SizedBox(width: 5),
-                                  CircleAvatar(
-                                    radius: 18,
-                                    backgroundColor: Colors.orange,
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          trailing: const Icon(Icons
-                              .arrow_forward), // Add arrow icon to navigate to the next page
-                        ),
-                      );
+                      return listOfDailyTasks(
+                          itemList[index],
+                          progressBarActiveColors[index],
+                          progressBarPercentage[index]);
                     },
                   ),
                 ),
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  Card listOfDailyTasks(String itemList, Color progressBarActiveColors,
+      int progressBarPercentage) {
+    return Card(
+      elevation: 20,
+      child: Padding(
+        padding: const EdgeInsets.only(top: 30, bottom: 30, left: 5, right: 5),
+        child: Row(
+          children: [
+            //hard coding listview item with children
+            sizedBoxCustom(valueWidth: 10, valueHeight: 0),
+            Container(
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  border: Border.all(width: 0.7, color: Colors.black)),
+              child: const CircleAvatar(
+                radius: 12,
+                backgroundColor: Colors.white,
+                child: Icon(Icons.check, size: 10, color: Colors.black),
+              ),
+            ),
+            sizedBoxCustom(valueWidth: 15, valueHeight: 0),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(itemList,
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 15)),
+                const SizedBox(height: 15),
+                SizedBox(
+                  width: 100,
+                  child: StepProgressIndicator(
+                    //progress indicator bar
+                    totalSteps: 100,
+                    currentStep: progressBarPercentage,
+                    size: 4,
+                    padding: 0,
+                    selectedColor: Colors.black,
+                    unselectedColor: Colors.transparent,
+                    roundedEdges: const Radius.circular(10),
+                  ),
+                ),
+              ],
+            ),
+            const Spacer(),
+            const SizedBox(
+              width: 80,
+              child: Stack(
+                children: [
+                  CircleAvatar(
+                    backgroundImage: AssetImage("assets/images/man.jpg"),
+                    radius: 16,
+                  ),
+                  Positioned(
+                    left: 20,
+                    child: CircleAvatar(
+                      backgroundImage: AssetImage("assets/images/woman.jpg"),
+                      radius: 16,
+                    ),
+                  ),
+                  Positioned(
+                    left: 40,
+                    child: CircleAvatar(
+                      backgroundImage: AssetImage("assets/images/woman3.jpg"),
+                      radius: 16,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Icon(Icons.arrow_forward_ios,
+                size: 20, color: Colors.black.withOpacity(0.8)),
+            sizedBoxCustom(valueWidth: 10, valueHeight: 0)
+          ],
         ),
       ),
     );
