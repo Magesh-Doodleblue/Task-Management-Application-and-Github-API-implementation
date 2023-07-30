@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class Data {
   List itemList = [
     "App Animation",
@@ -67,8 +65,6 @@ class Data {
     40,
   ];
 
-
-
   //Completed Projects
   List completedList = [
     "UI/UX",
@@ -87,5 +83,4 @@ class Data {
     100,
     100,
   ];
-
 }
