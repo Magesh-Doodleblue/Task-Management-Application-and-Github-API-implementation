@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:thiran_task/View/Profile/widget/profile_widget.dart';
 
 import '../../Controllers/database_helper.dart';
 
@@ -171,23 +172,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
             child: ElevatedButton(
               onPressed: () async {
                 // validation  :-)
-                if (nameController.text.isNotEmpty &&
-                    phoneController.text.isNotEmpty) {
-                  // Save profile data and image path to the local database
-                  final profile = {
-                    'name': nameController.text,
-                    'phone': phoneController.text,
-                    'profileImage': _selectedImagePath,
-                  };
-                  await DatabaseHelper().insertProfile(profile);
-                } else {
-                  // Show a Toast with the message
-                  Fluttertoast.showToast(
-                    msg: "Please add details",
-                    gravity: ToastGravity.BOTTOM,
-                    toastLength: Toast.LENGTH_SHORT,
-                  );
-                }
+                await saveInfoValidation();
+                //logic for adding data into database
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color.fromARGB(255, 116, 143, 249),
@@ -211,18 +197,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
             height: 50,
             child: ElevatedButton(
               onPressed: () async {
-                try {
-// Show a Toast with the message
-                  _deleteImage();
-                } catch (error) {
-                  // Show a Toast with the message
-                  Fluttertoast.showToast(
-                    msg: "Error while deleting data",
-                    gravity: ToastGravity.BOTTOM,
-                    toastLength: Toast.LENGTH_SHORT,
-                  );
-                }
-                ;
+                deleteInfoMethod();
+                //logic to delete the data
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color.fromARGB(255, 116, 143, 249),
@@ -241,46 +217,45 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget customAppbar() {
-    return Container(
-      child: Row(
-        children: [
-          Text(
-            "Profile",
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-          ),
-        ],
-      ),
-    );
+  void deleteInfoMethod() {
+    try {
+      // Show a Toast with the message
+      _deleteImage();
+    } catch (error) {
+      // Show a Toast with the message
+      Fluttertoast.showToast(
+        msg: "Error while deleting data",
+        gravity: ToastGravity.BOTTOM,
+        toastLength: Toast.LENGTH_SHORT,
+      );
+    }
+    ;
+  }
+
+  Future<void> saveInfoValidation() async {
+    if (nameController.text.isNotEmpty && phoneController.text.isNotEmpty) {
+      // Save profile data and image path to the local database
+      final profile = {
+        'name': nameController.text,
+        'phone': phoneController.text,
+        'profileImage': _selectedImagePath,
+      };
+      await DatabaseHelper().insertProfile(profile);
+    } else {
+      // Show a Toast with the message
+      Fluttertoast.showToast(
+        msg: "Please add details",
+        gravity: ToastGravity.BOTTOM,
+        toastLength: Toast.LENGTH_SHORT,
+      );
+    }
   }
 
   Future<void> _deleteImage() async {
     bool confirmed = await showDialog(
       context: context,
       builder: (context) {
-        return AlertDialog(
-          title: Text("Confirm Deletion"),
-          content: Text("Do you want to delete the profile image?"),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(true);
-                Fluttertoast.showToast(
-                  msg: "Data Deleted Successfully",
-                  gravity: ToastGravity.BOTTOM,
-                  toastLength: Toast.LENGTH_SHORT,
-                );
-              },
-              child: Text("Yes"),
-            ),
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(false);
-              },
-              child: Text("No"),
-            ),
-          ],
-        );
+        return dialogBoxAlert(context);
       },
     );
 

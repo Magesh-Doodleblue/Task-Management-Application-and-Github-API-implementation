@@ -7,8 +7,10 @@ import 'package:step_progress_indicator/step_progress_indicator.dart';
 
 import '../../Controllers/database_helper.dart';
 import '../../Model/data.dart';
+import '../Dashboard Design/dashboard_design.dart';
 import '../Projects/widget/project_color.dart';
 import '../common/style.dart';
+import 'widgets/dashboard_widget.dart';
 import 'widgets/task_status_widget.dart';
 
 class Dashboard extends StatefulWidget {
@@ -86,8 +88,52 @@ class _DashboardState extends State<Dashboard> {
                             child:
                                 CircularProgressIndicator(color: Colors.black));
                       }
-                      return listOfDailyTasks(data.itemList[index],
-                          data.progressBarPercentage[index]);
+                      return GestureDetector(
+                        onTap: () {
+                          //passing particular project details to next screen
+                          String itemName = data.itemList[index];
+                          String sharedBy = data.sharedBy[index];
+                          String startTime = data.startTime[index];
+                          String endTime = data.endTime[index];
+                          int percentage = data.progressBarPercentage[index];
+                          List<String> xValues = [
+                            'Sun',
+                            'Mon',
+                            'Tue',
+                            'Wed',
+                            'Thur',
+                            'Fri',
+                          ];
+                          List<double> yValues = [];
+                          //defining the chart Y values based on the percentage
+                          if (data.progressBarPercentage[index] > 70) {
+                            yValues = [5, 4, 6, 4, 7, 3];
+                          } else if (data.progressBarPercentage[index] > 50) {
+                            yValues = [3, 2, 9, 6, 4, 1];
+                          } else if (data.progressBarPercentage[index] > 20) {
+                            yValues = [3, 2, 9, 6, 4, 1];
+                          } else {
+                            yValues = [6, 4, 3, 7, 3, 4];
+                          }
+
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => DashboardDesignScreen(
+                                itemName: itemName,
+                                sharedBy: sharedBy,
+                                startTime: startTime,
+                                endTime: endTime,
+                                percentage: percentage,
+                                xValues: xValues,
+                                yValues: yValues,
+                              ),
+                            ),
+                          );
+                        },
+                        child: listOfDailyTasks(data.itemList[index],
+                            data.progressBarPercentage[index]),
+                      );
                     },
                   ),
                 ),
@@ -208,13 +254,6 @@ class _DashboardState extends State<Dashboard> {
       ],
     );
   }
-
-  SizedBox sizedBoxCustom(
-          {required double valueWidth, required double valueHeight}) =>
-      SizedBox(
-        height: valueHeight,
-        width: valueWidth,
-      );
 
   Row customAppbar(String profilePicture, bool isProfilePicture) {
     return Row(

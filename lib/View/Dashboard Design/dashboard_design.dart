@@ -10,6 +10,7 @@ import 'package:step_progress_indicator/step_progress_indicator.dart';
 import '../../Model/data.dart';
 import '../Projects/widget/project_color.dart';
 import '../common/filled_charts.dart';
+import 'widget/dashboard_design_widget.dart';
 
 class DashboardDesignScreen extends StatefulWidget {
   final String itemName;
@@ -262,33 +263,6 @@ class _DashboardDesignScreenState extends State<DashboardDesignScreen> {
     );
   }
 
-  Widget buildCheckBoxWithText(
-    String text,
-    bool checkBoxValue,
-    ValueChanged<bool?> onChanged,
-  ) {
-    return Row(
-      children: [
-        CustomCheckBox(
-          value: checkBoxValue,
-          shouldShowBorder: true,
-          borderColor: Color.fromARGB(255, 116, 143, 249),
-          checkedFillColor: Color.fromARGB(255, 116, 143, 249),
-          borderRadius: 5,
-          borderWidth: 1,
-          checkBoxSize: 18,
-          onChanged: onChanged,
-        ),
-        SizedBox(width: 8),
-        Text(
-          text,
-          style: TextStyle(
-            fontSize: 16,
-          ),
-        ),
-      ],
-    );
-  }
 
   Widget buildDropdownSelector() {
     return DropdownButton<String>(

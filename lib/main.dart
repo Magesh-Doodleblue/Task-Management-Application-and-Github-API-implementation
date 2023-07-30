@@ -10,6 +10,7 @@ import 'package:thiran_task/View/Profile/profile.dart';
 
 import 'View/Dashboard/dashboard.dart';
 import 'View/Github Home/github_home.dart';
+import 'View/Github Home/github_notifier.dart';
 import 'View/Navigation Bar/bottom_navigation_bar.dart';
 import 'my_app.dart';
 
