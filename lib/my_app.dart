@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import 'View/Navigation Bar/bottom_navigation_bar.dart';
+import 'View/Navigation Bar/navigation_bar.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -15,7 +15,8 @@ class MyApp extends StatelessWidget {
           Theme.of(context).textTheme,
         ),
       ),
-      home: const BottomNavigation(),
+      // home: const BottomNavigation(),
+      home: MyHomePage(),
       debugShowCheckedModeBanner: false,
     );
   }

@@ -6,6 +6,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:lottie/lottie.dart';
 import 'dart:convert';
 import 'package:provider/provider.dart';
 import 'package:sqflite/sqflite.dart';
@@ -97,58 +98,105 @@ class _GitHubRepositoryListScreenState
     });
   }
 
+  Widget customAppbar() {
+    return Container(
+      child: const Row(
+        children: [
+          CircleAvatar(
+            backgroundImage: AssetImage("assets/images/avatar.jpg"),
+            radius: 30,
+          ),
+          Text(
+            "High Stared Repository",
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+            ),
+          ),
+          Spacer(),
+          InkWell(
+            child: ImageIcon(
+              AssetImage("assets/icons/search.png"),
+              size: 24,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     log("BUILD widget called...");
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-        title: const Text('Favorite GitHub Repositories'),
-      ),
-      body: Consumer<GitHubRepositoryList>(
-        builder: (context, repositoryList, _) {
-          return ListView.builder(
-            controller: _scrollController,
-            itemCount: repositoryList.repositories.length + 1,
-            itemBuilder: (context, index) {
-              if (index == repositoryList.repositories.length) {
-                return const Center(
-                    child: CircularProgressIndicator(color: Colors.black));
-              }
+    return SafeArea(
+      child: Scaffold(
+        body: Consumer<GitHubRepositoryList>(
+          builder: (context, repositoryList, _) {
+            return Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(18.0),
+                  child: customAppbar(),
+                ),
+                Expanded(
+                  child: ListView.builder(
+                    controller: _scrollController,
+                    itemCount: repositoryList.repositories.length + 1,
+                    itemBuilder: (context, index) {
+                      if (index == repositoryList.repositories.length) {
+                        return Center(
+                          child: Expanded(
+                            child: Lottie.asset(
+                              'assets/icons/star.lottie', // Replace with the path to your animation JSON file
+                              width: 100,
+                              height: 100,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        );
+                      }
 
-              final repository = repositoryList.repositories[index];
-              return Padding(
-                padding: const EdgeInsets.only(bottom: 8, top: 8),
-                child: ListTile(
-                  leading: CircleAvatar(
-                    radius: 30,
-                    backgroundImage: NetworkImage(repository.ownerAvatarUrl),
-                  ),
-                  title: Text(repository.name,
-                      style: const TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 18)),
-                  subtitle: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(height: 5),
-                      Text(repository.description,
-                          style: const TextStyle(
-                              fontWeight: FontWeight.w500, fontSize: 14)),
-                      const SizedBox(height: 5),
-                      Text('Stars: ${repository.stars} 🌟',
-                          style: const TextStyle(
-                              fontWeight: FontWeight.w500, fontSize: 14)),
-                      const SizedBox(height: 5),
-                      Text('Username: ${repository.ownerUsername}',
-                          style: const TextStyle(
-                              fontWeight: FontWeight.w500, fontSize: 14)),
-                    ],
+                      final repository = repositoryList.repositories[index];
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 8, top: 8),
+                        child: ListTile(
+                          leading: CircleAvatar(
+                            radius: 30,
+                            backgroundImage:
+                                NetworkImage(repository.ownerAvatarUrl),
+                          ),
+                          title: Text(repository.name,
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 18)),
+                          subtitle: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const SizedBox(height: 5),
+                              Text(repository.description,
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 14)),
+                              const SizedBox(height: 5),
+                              Text('Stars: ${repository.stars} 🌟',
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 14)),
+                              const SizedBox(height: 5),
+                              Text('Username: ${repository.ownerUsername}',
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 14)),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
                   ),
                 ),
-              );
-            },
-          );
-        },
+              ],
+            );
+          },
+        ),
       ),
     );
   }
