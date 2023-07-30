@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 
+import '../../Model/data.dart';
 import '../common/style.dart';
 import 'widgets/task_status_widget.dart';
 
@@ -16,36 +17,9 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   String selectedOption = 'All Task';
 
-  List<String> dropdownOptions = [
-    'All Task',
-    'In Progress',
-    'Ongoing',
-    'Completed',
-    'Cancelled',
-  ];
-
-  List itemList = [
-    "App Animation",
-    "Dashboard Design",
-    "UI/UX",
-    "Project Management",
-    "Testing",
-    "Project Deployment",
-    "Product Delivery",
-  ];
-
-  List progressBarPercentage = [60, 40, 50, 10, 90, 100];
-
-  List progressBarActiveColors = [
-    Colors.deepPurple,
-    Colors.greenAccent,
-    Colors.yellow,
-    Colors.purpleAccent,
-    Colors.pinkAccent,
-    Colors.red,
-    Colors.orange,
-  ];
   //
+  Data data = Data();
+
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -77,17 +51,17 @@ class _DashboardState extends State<Dashboard> {
                     //
                   },
                   child: ListView.builder(
-                    itemCount: itemList.length,
+                    itemCount: data.itemList.length,
                     itemBuilder: (context, index) {
-                      if (itemList.isEmpty) {
+                      if (data.itemList.isEmpty) {
                         return const Center(
                             child:
                                 CircularProgressIndicator(color: Colors.black));
                       }
                       return listOfDailyTasks(
-                          itemList[index],
-                          progressBarActiveColors[index],
-                          progressBarPercentage[index]);
+                          data.itemList[index],
+                          data.progressBarActiveColors[index],
+                          data.progressBarPercentage[index]);
                     },
                   ),
                 ),
@@ -102,7 +76,7 @@ class _DashboardState extends State<Dashboard> {
   Card listOfDailyTasks(String itemList, Color progressBarActiveColors,
       int progressBarPercentage) {
     return Card(
-      elevation: 20,
+      elevation: 0,
       child: Padding(
         padding: const EdgeInsets.only(top: 30, bottom: 30, left: 5, right: 5),
         child: Row(
@@ -133,9 +107,9 @@ class _DashboardState extends State<Dashboard> {
                     //progress indicator bar
                     totalSteps: 100,
                     currentStep: progressBarPercentage,
-                    size: 4,
+                    size: 6.5,
                     padding: 0,
-                    selectedColor: Colors.black,
+                    selectedColor: progressBarActiveColors,
                     unselectedColor: Colors.transparent,
                     roundedEdges: const Radius.circular(10),
                   ),
@@ -168,8 +142,9 @@ class _DashboardState extends State<Dashboard> {
                 ],
               ),
             ),
+            sizedBoxCustom(valueWidth: 10, valueHeight: 0),
             Icon(Icons.arrow_forward_ios,
-                size: 20, color: Colors.black.withOpacity(0.8)),
+                size: 14, color: Colors.black.withOpacity(0.8)),
             sizedBoxCustom(valueWidth: 10, valueHeight: 0)
           ],
         ),
@@ -242,7 +217,7 @@ class _DashboardState extends State<Dashboard> {
         });
       },
       elevation: 0,
-      items: dropdownOptions.map<DropdownMenuItem<String>>((String value) {
+      items: data.dropdownOptions.map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(
           value: value,
           child: Text(value),

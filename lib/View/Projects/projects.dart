@@ -91,10 +91,10 @@ class _ProjectScreenState extends State<ProjectScreen>
               Expanded(
                 child: TabBarView(
                   controller: tabController,
-                  children: const [
+                  children: [
                     AllProjects(),
-                    OngoingProjects(),
-                    CompletedProjects(),
+                    const OngoingProjects(),
+                    const CompletedProjects(),
                   ],
                 ),
               ),

@@ -9,23 +9,18 @@ class DashboardDesignScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Column(
-        children: [
-          Text("Dashboard Design",
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-          FilledCurveChart(
-            xValues: [
-              'Sunday',
-              'Monday',
-              'Tuesday',
-              'Wednesday',
-              'Thursday',
-              'Friday',
-            ],
-            yValues: [0, 2, 4, 5, 3, 7],
-          ),
-        ],
+    return const SafeArea(
+      child: Scaffold(
+        body: Column(
+          children: [
+            Text("Dashboard Design",
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+            FilledCurveChart(
+              xValues: ['Sun', 'Mon', 'Tue', 'Wed', 'Thur', 'Fri'],
+              yValues: [5, 4, 6, 4, 7, 3],
+            ),
+          ],
+        ),
       ),
     );
   }

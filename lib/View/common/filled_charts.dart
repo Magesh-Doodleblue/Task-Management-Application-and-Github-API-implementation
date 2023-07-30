@@ -9,27 +9,42 @@ class FilledCurveChart extends StatelessWidget {
 
   const FilledCurveChart(
       {super.key, required this.xValues, required this.yValues});
-
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 200,
       child: SfCartesianChart(
-        primaryXAxis: CategoryAxis(),
-        // Use CategoryAxis for x-axis with specific labels
+        primaryXAxis: CategoryAxis(
+          //set x axis
+          majorGridLines: const MajorGridLines(width: 0),
+          minorGridLines: const MinorGridLines(width: 0),
+          axisLine: const AxisLine(width: 0),
+          majorTickLines: const MajorTickLines(size: 0),
+          // Remove major tick lines
+          minorTickLines: const MinorTickLines(size: 0),
+          // Remove minor tick lines
+        ),
         primaryYAxis: NumericAxis(
-          // Set y-axis properties
+          // Set y-axis
           minimum: 0,
           maximum: 10,
           interval: 2,
+          majorGridLines: const MajorGridLines(width: 0),
+          minorGridLines: const MinorGridLines(width: 0),
+          axisLine: const AxisLine(width: 0),
+          majorTickLines: const MajorTickLines(size: 0),
+          // Remove major tick lines
+          minorTickLines: const MinorTickLines(size: 0),
+          // Remove minor tick lines
         ),
         series: <ChartSeries>[
           SplineAreaSeries<ChartData, String>(
             dataSource: _getChartData(xValues, yValues),
             xValueMapper: (ChartData data, _) => data.x,
             yValueMapper: (ChartData data, _) => data.y,
-            color: const Color.fromRGBO(0, 255, 0, 1), // Green color fallback
             gradient: _createGradient(),
+            borderColor: Colors.green, // Border color for filled chart
+            borderWidth: 4, // Border width for filled chart
           ),
         ],
       ),
