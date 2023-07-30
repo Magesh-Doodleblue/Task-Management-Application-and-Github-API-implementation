@@ -93,8 +93,8 @@ class _ProjectScreenState extends State<ProjectScreen>
                   controller: tabController,
                   children: [
                     AllProjects(),
-                    const OngoingProjects(),
-                    const CompletedProjects(),
+                    OngoingProjects(),
+                    CompletedProjects(),
                   ],
                 ),
               ),

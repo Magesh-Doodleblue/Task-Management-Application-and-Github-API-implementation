@@ -14,11 +14,13 @@ class FilledCurveChart extends StatelessWidget {
     return SizedBox(
       height: 200,
       child: SfCartesianChart(
+        borderColor: Colors.transparent,
+        plotAreaBorderWidth: 0, //removes the border
         primaryXAxis: CategoryAxis(
           //set x axis
+          axisLine: const AxisLine(width: 0),
           majorGridLines: const MajorGridLines(width: 0),
           minorGridLines: const MinorGridLines(width: 0),
-          axisLine: const AxisLine(width: 0),
           majorTickLines: const MajorTickLines(size: 0),
           // Remove major tick lines
           minorTickLines: const MinorTickLines(size: 0),
@@ -29,9 +31,9 @@ class FilledCurveChart extends StatelessWidget {
           minimum: 0,
           maximum: 10,
           interval: 2,
+          axisLine: const AxisLine(width: 0),
           majorGridLines: const MajorGridLines(width: 0),
           minorGridLines: const MinorGridLines(width: 0),
-          axisLine: const AxisLine(width: 0),
           majorTickLines: const MajorTickLines(size: 0),
           // Remove major tick lines
           minorTickLines: const MinorTickLines(size: 0),

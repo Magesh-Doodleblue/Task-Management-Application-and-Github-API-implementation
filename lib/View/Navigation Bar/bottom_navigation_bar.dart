@@ -6,7 +6,6 @@ import 'package:thiran_task/View/Dashboard/dashboard.dart';
 import 'package:thiran_task/View/Projects/projects.dart';
 import 'package:thiran_task/View/settings/settings.dart';
 
-import '../Dashboard Design/dashboard_design.dart';
 import '../Github Home/github_home.dart';
 
 class BottomNavigation extends StatefulWidget {
@@ -21,7 +20,8 @@ class _BottomNavigationState extends State<BottomNavigation> {
 
   final List<Widget> _screens = [
     const Dashboard(),
-    const DashboardDesignScreen(),
+    // const DashboardDesignScreen(),
+    const SampleScreen(),
     const ProjectScreen(),
     const SettingsScreen(),
     const GitHubRepositoryListScreen(), // Add GitHub screen as the last item
@@ -67,5 +67,25 @@ class _BottomNavigationState extends State<BottomNavigation> {
         elevation: 3,
       ),
     );
+  }
+}
+
+class SampleScreen extends StatelessWidget {
+  const SampleScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const SafeArea(
+        child: Scaffold(
+      body: Center(
+        child: Text(
+          "SAMPLE",
+          style: TextStyle(
+            fontSize: 30,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+    ));
   }
 }

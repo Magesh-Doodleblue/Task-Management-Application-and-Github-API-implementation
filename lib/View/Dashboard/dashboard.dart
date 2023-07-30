@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 
 import '../../Model/data.dart';
+import '../Projects/widget/project_color.dart';
 import '../common/style.dart';
 import 'widgets/task_status_widget.dart';
 
@@ -17,14 +18,11 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   String selectedOption = 'All Task';
 
-  //
   Data data = Data();
-
+  GetColor getColor = GetColor();
+  //
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.height;
-
     return SafeArea(
       child: Scaffold(
         body: Padding(
@@ -58,9 +56,7 @@ class _DashboardState extends State<Dashboard> {
                             child:
                                 CircularProgressIndicator(color: Colors.black));
                       }
-                      return listOfDailyTasks(
-                          data.itemList[index],
-                          data.progressBarActiveColors[index],
+                      return listOfDailyTasks(data.itemList[index],
                           data.progressBarPercentage[index]);
                     },
                   ),
@@ -73,8 +69,7 @@ class _DashboardState extends State<Dashboard> {
     );
   }
 
-  Card listOfDailyTasks(String itemList, Color progressBarActiveColors,
-      int progressBarPercentage) {
+  Card listOfDailyTasks(String itemList, int progressBarPercentage) {
     return Card(
       elevation: 0,
       child: Padding(
@@ -102,14 +97,15 @@ class _DashboardState extends State<Dashboard> {
                         fontWeight: FontWeight.bold, fontSize: 15)),
                 const SizedBox(height: 15),
                 SizedBox(
-                  width: 100,
+                  width: 150,
                   child: StepProgressIndicator(
                     //progress indicator bar
                     totalSteps: 100,
                     currentStep: progressBarPercentage,
                     size: 6.5,
                     padding: 0,
-                    selectedColor: progressBarActiveColors,
+                    selectedColor:
+                        getColor.getSelectedColor(progressBarPercentage),
                     unselectedColor: Colors.transparent,
                     roundedEdges: const Radius.circular(10),
                   ),
