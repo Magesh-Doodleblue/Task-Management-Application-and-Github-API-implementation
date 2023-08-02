@@ -18,7 +18,9 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   final database = await openDatabase(
-      path.join(await getDatabasesPath(), 'github_repositories.db'),
+      //creating a new database when app opening
+      path.join(
+          await getDatabasesPath(), 'github_repositories.db'), //argument 1
       version: 1, onCreate: (db, version) {
     return db.execute(
       'CREATE TABLE repositories(id INTEGER PRIMARY KEY, name TEXT, description TEXT, stars INTEGER, ownerUsername TEXT, ownerAvatarUrl TEXT)',
@@ -29,8 +31,9 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => GitHubRepositoryList(database))
+        //we can create multiple change notifiers for overall application
       ],
-      child: const MyApp(),
+      child: const MyApp(), //calling MyApp
     ),
   );
 }

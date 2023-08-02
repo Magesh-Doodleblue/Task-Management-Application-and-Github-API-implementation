@@ -17,7 +17,7 @@ class _MyHomePageState extends State<MyHomePage> {
   final List<Widget> _screens = [
     const Dashboard(),
     const ProjectScreen(),
-    const GitHubRepositoryListScreen(), // Add GitHub screen as the last item
+    const GitHubRepositoryListScreen(),
     const ProfileScreen(),
   ];
   @override
@@ -37,11 +37,12 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Icon(Icons.add),
       ),
       bottomNavigationBar: BottomAppBar(
-        shape: CircularNotchedRectangle(),
-        notchMargin: 8.0,
+        shape: CircularNotchedRectangle(), //custom shape
+        notchMargin: 8.0, //adding padding from safe area
         child: Row(
-          mainAxisSize: MainAxisSize.max,
+          mainAxisSize: MainAxisSize.max, //fill entire space widthd
           mainAxisAlignment: MainAxisAlignment.spaceAround,
+          //give space around the children widgets
           children: <Widget>[
             buildNavItem(Icons.home_filled, 0),
             buildNavItem(Icons.video_file_rounded, 1),
@@ -76,6 +77,7 @@ class _MyHomePageState extends State<MyHomePage> {
           height: 55,
           child: Column(
             mainAxisSize: MainAxisSize.min,
+            //taking only needed space by child widget
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(
