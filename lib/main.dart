@@ -22,8 +22,9 @@ void main() async {
       version: 1, onCreate: (db, version) {
     return db.execute(
       'CREATE TABLE repositories(id INTEGER PRIMARY KEY, name TEXT, description TEXT, stars INTEGER, ownerUsername TEXT, ownerAvatarUrl TEXT)',
-    );
-  });
+    ); //return ending
+  } // onCreate ending...
+      ); // database variable ending
   runApp(
     MultiProvider(
       providers: [
