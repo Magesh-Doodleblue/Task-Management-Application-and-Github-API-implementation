@@ -35,8 +35,7 @@ class GitHubRepositoryList extends ChangeNotifier {
             // If the repository with the same id doesn't exist, insert it into the database
             await _database.insert('repositories', repository.toJson());
           } else {
-            // If the repository with the same id already exists, you can update it here if needed.
-            // For simplicity, we are skipping the insertion in this example.
+            log("same repo exists");
           }
         }
 
