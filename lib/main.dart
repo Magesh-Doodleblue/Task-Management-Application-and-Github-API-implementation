@@ -37,3 +37,20 @@ void main() async {
     ),
   );
 }
+
+
+
+
+
+Future<List<Repository>> getRepositories() async {
+    final db = await initializeDatabase();
+    final List<Map<String, dynamic>> maps = await db.query('repositories');
+    return List.generate(maps.length, (i) {
+      return Repository(
+        id: maps[i]['id'],
+        name: maps[i]['name'],
+        text: maps[i]['text'],
+        imageUrl: maps[i]['imageUrl'],
+      );
+    });
+  }
