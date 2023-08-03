@@ -167,3 +167,31 @@ class _GitHubRepositoryListScreenState
     );
   }
 }
+
+
+
+
+
+
+
+
+class _GitHubRepositoryListScreenState extends State<GitHubRepositoryListScreen> {
+  late GitHubRepositoryList _repositoryList;
+  
+  @override
+  void initState() {
+    super.initState();
+
+    _loadProfileData();
+    final database = await DatabaseHelper().database; // Change here
+    _repositoryList = Provider.of<GitHubRepositoryList>(
+      context,
+      listen: false,
+      create: (_) => GitHubRepositoryList(database),
+    );
+
+    // ...
+  }
+
+  // ...
+}
