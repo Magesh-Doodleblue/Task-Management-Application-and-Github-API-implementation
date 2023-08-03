@@ -58,3 +58,50 @@ class DatabaseHelper {
     await db.delete('Profile');
   }
 }
+
+
+
+class DatabaseHelper {
+  static Database? _database;
+
+  Future<Database> get database async {
+    if (_database != null) return _database!;
+
+    _database = await initDatabase();
+    return _database!;
+  }
+
+  Future<Database> initDatabase() async {
+    Directory documentsDirectory = await getApplicationDocumentsDirectory();
+    String dbPath = path.join(documentsDirectory.path, "profile.db");
+
+    return await openDatabase(
+      dbPath,
+      version: 1,
+      onCreate: (Database db, int version) async {
+        await db.execute('''
+          CREATE TABLE IF NOT EXISTS Profile(
+            id INTEGER PRIMARY KEY,
+            name TEXT,
+            phone TEXT,
+            profileImage TEXT
+          )
+        ''');
+
+        await db.execute('''
+          CREATE TABLE IF NOT EXISTS repositories(
+            id INTEGER PRIMARY KEY,
+            name TEXT,
+            description TEXT,
+            stars INTEGER,
+            ownerUsername TEXT,
+            ownerAvatarUrl TEXT
+          )
+        ''');
+      },
+    );
+  }
+
+  // Rest of the code remains the same...
+}
+
